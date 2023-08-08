@@ -1,31 +1,69 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue';
+import { timeSince } from 'src/shared/helpers';
+import { Issue, State } from 'src/issues/models';
+import MdRender from 'vue-markdown-render';
+import { useIssue } from 'src/issues/composables/useIssue';
+
+interface Props {
+  issue: Issue;
+  isComment?: boolean;
+}
+
+const props = defineProps<Props>();
+
+const created = computed(() => timeSince(props.issue?.created_at));
+const issueNumber = computed(() => props.issue?.number || 0);
+
+const { setIssueCache } = useIssue(issueNumber.value, {
+  autoload: false,
+});
+</script>
 
 <template>
-  <q-card class="text-black col-12 q-mb-md" flat bordered>
+  <q-card
+    class="text-black col-12 q-mb-md"
+    flat
+    bordered
+    @mouseenter="!isComment ? setIssueCache(issue) : undefined"
+  >
     <q-item>
       <q-item-section avatar>
         <q-avatar>
-          <img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+          <img :src="issue?.user.avatar_url" :alt="issue?.user.login" />
         </q-avatar>
       </q-item-section>
 
       <q-item-section>
         <q-item-label>
-          <router-link :to="`/issue/${1}`">Algún título</router-link>
+          <router-link v-if="issue.number" :to="`/issue/${issue.number}`">
+            {{ issue?.title }}
+          </router-link>
+          <span class="text-bold" v-else>{{ issue?.user?.login }}</span>
         </q-item-label>
-        <q-item-label caption> 2 days ago </q-item-label>
+        <q-item-label caption> {{ created }} ago </q-item-label>
       </q-item-section>
 
       <q-item-section>
         <q-item-label class="row items-center justify-end">
           <q-item-label class="q-mr-md">
             <q-icon name="question_answer" />
-            32
+            {{ issue?.comments }}
           </q-item-label>
-          <q-chip color="positive" text-color="white" icon="check">
+          <q-chip
+            v-if="issue?.state === State.CLOSED"
+            color="positive"
+            text-color="white"
+            icon="check"
+          >
             Closed
           </q-chip>
-          <q-chip color="negative" text-color="white" icon="bug_report">
+          <q-chip
+            v-if="issue?.state === State.OPEN"
+            color="negative"
+            text-color="white"
+            icon="bug_report"
+          >
             Open
           </q-chip>
         </q-item-label>
@@ -34,13 +72,23 @@
 
     <q-separator />
 
-    <q-item-section class="q-pa-md"> Algún código de Markdown </q-item-section>
+    <q-item-section class="q-pa-md">
+      <md-render :source="issue?.body || ''" />
+    </q-item-section>
 
     <q-separator />
 
     <q-item-section class="q-pa-xs q-gutter-xs">
       <div>
-        <q-chip outline clickable color="primary"> Click </q-chip>
+        <q-chip
+          outline
+          size="1rem"
+          v-for="label of issue?.labels"
+          :style="{ color: `#${label.color}` }"
+          :key="label.id"
+          :label="label.name"
+        >
+        </q-chip>
       </div>
     </q-item-section>
   </q-card>

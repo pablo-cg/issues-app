@@ -1,13 +1,6 @@
 import { defineStore } from 'pinia';
+import { State } from 'src/issues/models';
 import { ref } from 'vue';
-
-const State = {
-  ALL: '',
-  OPEN: 'open',
-  CLOSED: 'closed',
-} as const;
-
-type State = (typeof State)[keyof typeof State];
 
 const issuesStoreDefinition = () => {
   const state = ref<State>(State.ALL);
