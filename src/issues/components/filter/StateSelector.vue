@@ -9,8 +9,7 @@ const { state } = storeToRefs(issuesStore);
 <template>
   <q-btn-toggle
     v-model="state"
-    toggle-color="primary"
-    push
+    toggle-color="secondary"
     spread
     :options="[
       { label: 'All', value: '' },

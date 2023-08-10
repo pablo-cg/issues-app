@@ -1,4 +1,3 @@
-import { computed } from 'vue';
 import { githubApi } from 'src/api/githubApi';
 import { Issue } from '../models';
 import { useQuery, useQueryClient } from '@tanstack/vue-query';
