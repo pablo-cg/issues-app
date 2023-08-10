@@ -1,41 +1,36 @@
 # Issues App (issues-app)
 
-Parte del curso Vue Intermedio de Fernando Herrera
+Parte del curso de Vue Intermedio de Fernando Herrera
 
-## Install the dependencies
+## Instala las dependencias
+
 ```bash
 yarn
-# or
+# o
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Configura las variables de entorno
+
+1. Haz una copia del archivo `.env.example` y cámbiale el nombre a `.env`
+2. Completa las variables en el archivo `.env` según corresponda
+
+### Inicia la aplicación en modo de desarollo
+
 ```bash
-quasar dev
+yarn dev
+# o
+npm run dev
 ```
 
+### Construye la aplicación para producción
 
-### Lint the files
 ```bash
-yarn lint
-# or
-npm run lint
+yarn build
+# o
+npm run build
 ```
 
+### Personaliza la configuración
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+Consulta [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

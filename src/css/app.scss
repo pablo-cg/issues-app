@@ -1,1 +1,38 @@
 // app global css in SCSS form
+h1 {
+  font-size: 25px;
+  margin: 0;
+}
+h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+img {
+  display: inherit;
+}
+
+code {
+  white-space: pre-wrap !important;
+}
+
+cursor {
+  cursor: pointer;
+}
+
+a {
+  color: black;
+  font-size: 1.2rem;
+}
+
+blockquote,
+pre,
+code {
+  word-break: break-all !important;
+}
